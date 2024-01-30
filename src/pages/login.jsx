@@ -31,12 +31,9 @@ const Login = () =>  {
             const refresh_token = response.data.refresh_token
             localStorage.setItem('refresh_token', refresh_token)
             localStorage.setItem('access_token', access_token);
-            console.log(response.data)
-            console.log(localStorage.getItem('access_token'))
             localStorage.setItem('user', JSON.stringify(response.data.user))
-            //Comments
-            console.log(response)
-            console.log(response.data.user)
+            console.log("RESPONSE DATA",response.data)
+            console.log("USER OBJECT",localStorage.getItem('user'))
             navigate('/')
         } catch (error) {
             showError(error.message)

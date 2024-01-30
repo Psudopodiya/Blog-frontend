@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Navbar from 'src/components/Navbar/Navbar'
 import Footer from 'src/components/Footer/Footer'
 import axios from 'axios'
-import './home.css'
 
 
 
 const Home = ({handleLogout}) => {
-  console.log('Home component is rendering');
-
 
   const[blogs, setBlogs] = useState([])
   
@@ -24,7 +21,6 @@ const Home = ({handleLogout}) => {
 
   useEffect(()=>{
     fetchData()
-    console.log('When loading')
   },[])
 
   return (
@@ -70,30 +66,36 @@ const Home = ({handleLogout}) => {
         {/* Blog List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 mb-8">
           {blogs.map((blog) => (
-            <div key={blog.id} className="relative flex w-96 flex-col rounded-xl bg-white border-green-950 bg-clip-border text-gray-700 shadow-md max-w-[250px] ">
+            <div key={blog.id} className="relative flex w-96 flex-col rounded-xl bg-white border-green-950 bg-clip-border text-gray-700 shadow-md max-w-[300px] ">
               <div className='p-6'>
                 <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
                   {blog.title}
                 </h5>
                 {/* calendar and likes */}
-                <div className="flex gap-7 text-xs pb-2">
-                  <div className="flex items-center bg-slate-400 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-4 h-">
+                <div className="flex gap-5 text-xs pb-4">
+                  <div className="flex items-center bg-slate-400 rounded-lg min-w-[85px] justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
                     </svg>
                     <p className="">11/03/2002</p>
                   </div>
-                  <div className="flex items-center bg-slate-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-4 h-5">
+                  <div className="flex items-center bg-slate-400 rounded-lg min-w-[30px] justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
                     3
                   </div>
                 </div>
+                <div className='text-xs pb-4 '>This is a little para for discriptions</div>
 
-                <div className="custom-shape-container relative">
-                  <div className="custom-shape"></div>
-                  <button className="absolute top-0 left-0 blog-card-button">Button</button>
+                <div className="min-h-[30vh] min-w-[30vh] rounded-lg relative"
+                      style={{backgroundImage: `url(http://127.0.0.1:8000${blog.cover_image})`,
+                              backgroundPosition: 'center',
+                              backgroundSize: 'cover',
+                            }}>
+                  <div className="relative left-0 top-0 inline-block min-h-12 min-w-28 overflow-hidden rounded-lg bg-white p-2">
+                    <button className="min-h-12 min-w-28 rounded-lg border border-black">Read More!</button>
+                  </div>
                 </div>
               </div>
             </div>

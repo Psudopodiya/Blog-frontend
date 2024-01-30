@@ -7,25 +7,38 @@ const BlogAdd = () => {
   const token = localStorage.getItem('access_token')
   const user = JSON.parse(localStorage.getItem('user'))
   const [imageUrl, setImageUrl] = useState(null)
-  // console.log("THE USER AFTER LOGIN: ", user)
+  const [image, setImage] = useState(null)
+
   const [formData, setFormData] = useState({
     author: user.username,
     title: "",
     content: "",
     category: "",
-    image: null,
   });
 
+  const clearForm = () => {
+    setFormData({
+      title: '',
+      category: 'Technology', // Default category or the first one
+      content: '',
+    });
+    setImageUrl(null);
+    setImage(null);
+  };
+
   const handleFormChange=(e)=>{
-    console.log(formData)
-    const {name, value, files} = e.target
-    if(name === 'image'){
-      setImageUrl(URL.createObjectURL(files[0]))
-      setFormData({...formData, [name]: files[0]})
-    }else{
-      setFormData({...formData, [name]: value})
-    }
+    const {name, value} = e.target
+    setFormData({...formData, [name]: value})
   }
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+      setImageUrl(URL.createObjectURL(file));
+    }
+  };
+
   const[errorMessage, setErrorMessage] = useState(null)
   const showError=(message)=>{
     setErrorMessage(message)
@@ -36,9 +49,17 @@ const BlogAdd = () => {
 
   const handleSubmit= async (e) =>{
     e.preventDefault()
-    console.log(token)
+    console.log(formData)
+    const data = new FormData();
+    data.append('author', formData.author);
+    data.append('title', formData.title);
+    data.append('content', formData.content);
+    data.append('category', formData.category);
+    if (image) {
+      data.append('cover_image', image);
+    }
     try {
-      const response = await axios.post('http://127.0.0.1:8000/create_blog', formData,
+      await axios.post('http://127.0.0.1:8000/create_blog', data,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -46,8 +67,6 @@ const BlogAdd = () => {
         }
       );
         //Comments
-        console.log(response)
-        console.log(response.data.user)
         navigate('/')
     } catch (error) {
         showError(error.message)
@@ -55,6 +74,7 @@ const BlogAdd = () => {
     }
 
   }
+
   useEffect(() => {
     // can add the part to fetch categories from the backend
 
@@ -157,7 +177,7 @@ const BlogAdd = () => {
                           htmlFor="file-upload"
                           className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                           <span>Upload a file</span>
-                          <input id="file-upload" name="image" type="file" className="sr-only" onChange={(e)=> handleFormChange(e)}/>
+                          <input id="file-upload" name="image" type="file" className="sr-only" onChange={handleImageChange}/>
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
@@ -176,6 +196,7 @@ const BlogAdd = () => {
         <button
           type="button"
           className="text-sm font-semibold leading-6 text-gray-900"
+          onClick={clearForm}
         >
           Clear
         </button>
