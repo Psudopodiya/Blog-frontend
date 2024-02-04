@@ -4,7 +4,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Dosis: ['Dosis', 'sans-serif'],
+        Exo: ['Exo', 'sans-serif'],
+        Sanchez: ['Sanchez', 'serif'],
+        Trirong: ['Trirong', 'serif'],
+      },
+    },
   },
   plugins: [],
 }

@@ -4,7 +4,7 @@ import Register from './pages/register';
 import Home from './pages/home';
 import Test from './pages/test';
 import BlogAdd from 'src/pages/blogAdd';
-import Profile from 'src/pages/Home/profile';
+import Profile from 'src/pages/profile';
 
 function App() {
   const handleLogout = () => {
