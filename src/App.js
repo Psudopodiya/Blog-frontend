@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Test from './pages/test';
 import BlogAdd from 'src/pages/blogAdd';
 import Profile from 'src/pages/profile';
+import DetailBlog from './pages/detailBlog';
 
 function App() {
   const handleLogout = () => {
@@ -24,6 +25,7 @@ function App() {
             <Route path='/' element={<Home handleLogout={handleLogout}/>}/>
             <Route path='/addBlog' element={ localStorage.getItem('access_token') ? <BlogAdd/> : <Navigate to="/login" replace/>}></Route>
             <Route path='/profile' element={ localStorage.getItem('access_token') ? <Profile/> : <Navigate to='/login' replace/>}></Route>
+            <Route path="/blog/:pk" element={<DetailBlog/>}></Route>
           </Routes>
         </div>
       </Router>

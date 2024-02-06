@@ -25,7 +25,7 @@ const Navbar = ({handleLogout}) => {
       </div>
 
       {/* Default navbar routes */}
-      <nav className={`flex-col ${isOpen ? 'flex' : 'hidden'} font-Exo md:flex md:flex-row md:justify-end  `}>
+      <nav className={`flex-col ${isOpen ? 'flex' : 'hidden'} font-Exo md:flex md:flex-row md:justify-end`}>
           <a href='/' className="px-4 py-2 text-sm font-semibold text-gray-900 rounded-lg md:mt-0 hover:bg-gray-200">Blogs</a>
           <a href='/' className="px-4 py-2 text-sm font-semibold text-gray-900 rounded-lg md:mt-0 hover:bg-gray-200">Contacts</a>
           <a href='/' className="px-4 py-2 text-sm font-semibold text-gray-900 rounded-lg md:mt-0 hover:bg-gray-200">About</a>

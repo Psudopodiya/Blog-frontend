@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react'
 import Navbar from 'src/components/Navbar/Navbar'
 import Footer from 'src/components/Footer/Footer'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 
 const Home = ({handleLogout}) => {
-
+  let navigate = useNavigate()
   const[blogs, setBlogs] = useState([])
-  console.log("THis is the blogs",blogs)
+
   const fetchData = async() =>{
     try{
       const response = await axios.get('http://127.0.0.1:8000') 
-      console.log("API Response: ", response)
+      // console.log("API Response: ", response)
       setBlogs(response.data)
     }catch (error) {
       console.error('Error fetching data:', error.message);
     }
   }
+
+  const handleReadMoreClick = (pk)=>{
+    navigate(`/blog/${pk}`)
+  }
+
+
 
   useEffect(()=>{
     fetchData()
@@ -75,7 +82,7 @@ const Home = ({handleLogout}) => {
         {/* Blog List */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 mb-8">
           {blogs.map((blog) => (
-            <div key={blog.id} className="flex flex-col p-2 border-2 border-black shadow-xl rounded-lg  transform transition duration-500 hover:scale-110 hover:bg-slate-300">
+            <div key={blog.pk} className="flex flex-col p-2 border-2 border-black shadow-xl rounded-lg  transform transition duration-500 hover:scale-110 hover:bg-slate-300">
                 <div className="text-2xl font-Exo">{blog.title}</div>
                 {/* calendar and likes */}
                 <div className="flex justify-items-start mt-3 space-x-3 ">
@@ -97,7 +104,7 @@ const Home = ({handleLogout}) => {
                 {/* Cover Image */}
                 <div className ='min-h-56 max-h-64 mt-2 rounded-lg bg-center bg-cover hover:bg-gray-200' style={{backgroundImage: `url('http://127.0.0.1:8000/${blog.cover_image}')`}}>
                   <div className="relative -left-1 top-0 inline-block min-h-12 min-w-28 overflow-hidden rounded-lg bg-white p-2">
-                    <button className="min-h-12 min-w-28 rounded-lg border border-black ">Read More!</button>
+                    <button className="min-h-12 min-w-28 rounded-lg border border-black " onClick={()=> handleReadMoreClick(blog.pk)}>Read More!</button>
                   </div>
                 </div>
             </div>
